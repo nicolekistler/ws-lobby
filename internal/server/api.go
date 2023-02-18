@@ -2,8 +2,9 @@ package server
 
 import (
 	"encoding/json"
-	"log"
+	"math/rand"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -32,12 +33,17 @@ func (s *Server) getRoom(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	log.Println("Bruh")
-
 	json.NewEncoder(w).Encode(Room{})
 }
 
 // Create a game room
 func (s *Server) createRoom(w http.ResponseWriter, r *http.Request) {
-	log.Println("Create room")
+	w.Header().Set("Content-Type", "application/json")
+
+	var room Room
+	_ = json.NewDecoder(r.Body).Decode(&room)
+	room.ID = strconv.Itoa(rand.Intn(1000000))
+
+	s.Rooms = append(s.Rooms, room)
+	json.NewEncoder(w).Encode(&room)
 }

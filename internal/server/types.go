@@ -23,7 +23,7 @@ type User struct {
 	ID       string `json:"id"`
 	Name     string `json:"name"`
 	AvatarID string `json:"avatarId"`
-	IsHost   bool   `json:"isHost"`
+	Host     bool   `json:"Host"`
 	TeamId   string `json:"teamId"`
 }
 
