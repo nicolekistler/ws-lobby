@@ -12,25 +12,19 @@ type Server struct {
 }
 
 type RoomState struct {
-	Round int `json:"Round"`
+	Round int `json:"Round" binding:"required"`
 }
 
 type Settings struct {
-	MaxNumberRounds int `json:"maxNumberRounds"`
+	MaxNumberRounds int `json:"maxNumberRounds" binding:"required"`
+	MaxNumberUsers  int `json:"maxNumberUsers" binding:"required"`
 }
 
 type User struct {
-	ID       string `json:"id"`
-	Name     string `json:"name"`
-	AvatarID string `json:"avatarId"`
-	Host     bool   `json:"Host"`
-	TeamId   string `json:"teamId"`
-}
-
-type Team struct {
-	TeamID string `json:"teamId"`
-	Score  int    `json:"score"`
-	Users  []string
+	ID       string `json:"id"  binding:"required"`
+	Name     string `json:"name" binding:"required"`
+	AvatarID string `json:"avatarId" binding:"required"`
+	Host     bool   `json:"Host" binding:"required"`
 }
 
 type Room struct {
@@ -38,5 +32,11 @@ type Room struct {
 	State    RoomState
 	Settings Settings
 	Users    []User
-	Teams    []Team
+}
+
+type CreateRoomRequest struct {
+	Name            string `json:"name" binding:"required"`
+	MaxNumberRounds int    `json:"maxNumberRounds" binding:"required"`
+	MaxNumberUsers  int    `json:"maxNumberUsers" binding:"required"`
+	AvatarID        string `json:"avatarId" binding:"required"`
 }

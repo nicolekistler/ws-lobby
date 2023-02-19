@@ -14,46 +14,40 @@ func NewServer() *Server {
 			{
 				ID:       "1",
 				State:    RoomState{Round: 0},
-				Settings: Settings{MaxNumberRounds: 10},
+				Settings: Settings{MaxNumberRounds: 10, MaxNumberUsers: 8},
 				Users: []User{
 					{
 						ID:       "1",
 						Name:     "Stella",
 						AvatarID: "4",
 						Host:     true,
-						TeamId:   "1",
 					},
 					{
 						ID:       "2",
 						Name:     "Gary",
 						AvatarID: "4",
 						Host:     false,
-						TeamId:   "1",
 					},
 				},
-				Teams: []Team{},
 			},
 			{
 				ID:       "2",
 				State:    RoomState{Round: 0},
-				Settings: Settings{MaxNumberRounds: 7},
+				Settings: Settings{MaxNumberRounds: 7, MaxNumberUsers: 5},
 				Users: []User{
 					{
 						ID:       "4",
 						Name:     "Possum",
 						AvatarID: "3",
 						Host:     true,
-						TeamId:   "2",
 					},
 					{
 						ID:       "6",
 						Name:     "Rila",
 						AvatarID: "7",
 						Host:     false,
-						TeamId:   "2",
 					},
 				},
-				Teams: []Team{},
 			},
 		},
 		Upgrader: &websocket.Upgrader{

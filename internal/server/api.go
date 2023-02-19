@@ -2,9 +2,8 @@ package server
 
 import (
 	"encoding/json"
-	"math/rand"
+	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -40,10 +39,19 @@ func (s *Server) getRoom(w http.ResponseWriter, r *http.Request) {
 func (s *Server) createRoom(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	var room Room
-	_ = json.NewDecoder(r.Body).Decode(&room)
-	room.ID = strconv.Itoa(rand.Intn(1000000))
+	decoder := json.NewDecoder(r.Body)
+	var requestData CreateRoomRequest
 
-	s.Rooms = append(s.Rooms, room)
-	json.NewEncoder(w).Encode(&room)
+	if err := decoder.Decode(&requestData); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	room := NewRoom(requestData)
+
+	s.Rooms = append(s.Rooms, *room)
+	json.NewEncoder(w).Encode(room)
+
+	log.Printf("Received POST request with data: %+v", requestData)
+	log.Printf("new arr: %+v", s.Rooms)
 }
